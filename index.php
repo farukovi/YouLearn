@@ -63,11 +63,25 @@ if(isset($_POST['login']))
 		}
 		else if($type=="Tutor")
 		{
-			header("Location:Tutor.php");
+			$query = "select * from tutor_info where Email='$email' and password='$password'";
+			$res = mysqli_query($con,$query);
+			if(mysqli_num_rows($res)>0)
+			{
+				$rows = mysqli_fetch_array($res);
+				$_SESSION['TutorId'] = $rows['Id'];
+				header("Location:Tutor.php");
+			}	
 		}
 		else if($type=="Mentor")
 		{
-			header("Location:Mentor.php");
+			$query = "select * from mentor_info where Email='$email' and password='$password'";
+			$res = mysqli_query($con,$query);
+			if(mysqli_num_rows($res)>0)
+			{
+				$rows = mysqli_fetch_array($res);
+				$_SESSION['TutorId'] = $rows['Id'];
+				header("Location:Mentor.php");
+			}
 		}
 		else if($type=="Child")
 		{

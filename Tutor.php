@@ -75,7 +75,7 @@ body {
 <div class="container">
   <div class="sidenav">
   <a href="#about">Home</a>
-  <a href="#services">Profile</a>
+  <a href="ProfileTutor.php">Profile</a>
   <a href="#clients">Upload Section</a>
   <a href="#contact">Contact</a>
 </div>

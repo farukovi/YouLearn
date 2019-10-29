@@ -85,8 +85,19 @@ body {
     <strong>Hello Faruk:</strong> This is Admin Home.Here You can complete all your admin work.
   </div>
   <hr class="new2">
+  <?php
+	$con = mysqli_connect("localhost","root","","software_project");
+	$sql = "SELECT COUNT(Id) FROM children_account";
+	$res = mysqli_query($con,$sql);
+	if(mysqli_num_rows($res) > 0)
+	{
+		$row = mysqli_fetch_array($res);
+		$x = $row['COUNT(Id)'];
+		//echo $x;
+	}
+	?>
  <button type="button" class="btn btn-default" >Check All Report</button>
- <button type="button" class="btn btn-default" style="margin-left:50px">Learner Approval</button>
+ <button type="submit" formaction="approved.php" class="btn btn-default" style="margin-left:50px">Learner Approval <span class="badge"><?php echo $x; ?></span></button>
  <button type="button" class="btn btn-default" style="margin-left:50px">Check Tutor info</button>
   <button type="button" class="btn btn-default" style="margin-left:50px">Chat with mentor</button>
  <button type="button" class="btn btn-default" style="margin-left:50px">Tutor Activity</button>

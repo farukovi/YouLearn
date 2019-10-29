@@ -4,6 +4,7 @@ if(!isset($_SESSION['name']))
 {
 	header("Location:YouLearn.html");
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -73,7 +74,7 @@ body {
 <div class="container">
   <div class="sidenav">
   <a href="#about">Home</a>
-  <a href="#services">Profile</a>
+  <a href="ProfileMentor.php">Profile</a>
   <a href="#clients">View Child Info</a>
   <a href="#contact">Contact</a>
 </div>
@@ -111,7 +112,7 @@ body {
  <button type="button" class="btn btn-default" style="margin-left:50px">Exam Details</button>
  <hr class="new2">
   </div>
-</div>
+</div>				
 </form>
 </body>
 </html>
