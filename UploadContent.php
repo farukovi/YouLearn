@@ -4,12 +4,11 @@ if(!isset($_SESSION['name']))
 {
 	header("Location:YouLearn.html");
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Mentor DashBoard</title>
+  <title>Tutor DashBoard</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -56,6 +55,8 @@ body {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
+
+
 </style>
 </head>
 <body>
@@ -63,7 +64,7 @@ body {
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#" style="font-size:30px;">YouLearn: Mentor Panel</a>
+      <a class="navbar-brand" href="#" style="font-size:30px;">YouLearn: Tutor Panel</a>
     </div>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="Logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
@@ -74,45 +75,29 @@ body {
 <div class="container">
   <div class="sidenav">
   <a href="#about">Home</a>
-  <a href="ProfileMentor.php">Profile</a>
-  <a href="ViewChildInfo.php">View Child Info</a>
+  <a href="ProfileTutor.php">Profile</a>
+  <a href="UploadContent.php">Upload Section</a>
   <a href="#contact">Contact</a>
 </div>
 
 <div class="main">
-<center>Welcome to Mentor Home page</center>
-
+<h2><center>Welcome to Tutor Home page</center></h2>
 <div class="alert alert-info">
-    <strong>Hello <?php echo $_SESSION['MentorName']; ?></strong> This is your DashBoard.You can check Your child's activity from here. 
+    <strong>Hello <?php echo $_SESSION['TutorName']; ?></strong> You're assigned to Play Group.You have to cover the syllabus with your video content.
   </div>
   <hr class="new2">
-  <button type="button" class="btn btn-default">View Your Weekly Activity</button>
- <button type="button" class="btn btn-default" style="margin-left:50px">Save Child Login</button>
- <button type="button" class="btn btn-default" style="margin-left:50px">Bookmarks</button>
-  <button type="button" class="btn btn-default" style="margin-left:50px">Teacher's Info</button>
- <button type="button" class="btn btn-default" style="margin-left:50px">Report to Admin</button>
- <hr class="new2">
- <div class="sty" >
- <h3>Purpose: </h3>
-	<ul>
-	 <h4> <li>Check Weekly Progress</li>
-	  <li>Check his learning ability</li>
-	  <li>Many more</li>
-	</ul>
- </div>
- <hr class="new2">
- <button type="button" class="btn btn-default" style="margin-left:100px;">How to Upload</button>
- <button type="submit" formaction="Child_Approval.php" class="btn btn-default" style="margin-left:50px">Add Child</button>
-  <button type="button" class="btn btn-default" style="margin-left:50px">Request For Online Class</button>
- <button type="submit" formaction="SampleVideo.php" class="btn btn-default" style="margin-left:50px">See Sample Video</button>
-<hr class="new2">
+	<label for="usr">Subject:</label>
+	<input type="text" class="form-control" id="usr">
+	<label for="usr">Description:</label>
+	<input type="text" class="form-control" id="usr">
+	<label for="usr">Select file for Upload:</label>
+	<input type="file" name="fileToUpload" id="fileToUpload">
+	<hr class="new2">
+	<input type="button" name="Submit"value="Submit">
+	<hr class="new2">
 
-<button type="button" class="btn btn-default" style="margin-left:170px">View All Subject</button>
- <button type="button" class="btn btn-default" style="margin-left:50px">View Syllabus</button>
- <button type="button" class="btn btn-default" style="margin-left:50px">Exam Details</button>
- <hr class="new2">
-  </div>
-</div>				
+</div>
+</div>
 </form>
 </body>
 </html>

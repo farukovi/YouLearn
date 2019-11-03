@@ -69,6 +69,7 @@ if(isset($_POST['login']))
 			{
 				$rows = mysqli_fetch_array($res);
 				$_SESSION['TutorId'] = $rows['Id'];
+				$_SESSION['TutorName'] = $rows['Name'];
 				header("Location:Tutor.php");
 			}	
 		}
@@ -79,6 +80,7 @@ if(isset($_POST['login']))
 			if(mysqli_num_rows($res)>0)
 			{
 				$rows = mysqli_fetch_array($res);
+				$_SESSION['MentorName'] = $rows['Name'];
 				$_SESSION['TutorId'] = $rows['Id'];
 				header("Location:Mentor.php");
 			}

@@ -80,38 +80,35 @@ body {
 </div>
 
 <div class="main">
-<center>Welcome to Mentor Home page</center>
-
-<div class="alert alert-info">
-    <strong>Hello <?php echo $_SESSION['MentorName']; ?></strong> This is your DashBoard.You can check Your child's activity from here. 
-  </div>
-  <hr class="new2">
-  <button type="button" class="btn btn-default">View Your Weekly Activity</button>
- <button type="button" class="btn btn-default" style="margin-left:50px">Save Child Login</button>
- <button type="button" class="btn btn-default" style="margin-left:50px">Bookmarks</button>
-  <button type="button" class="btn btn-default" style="margin-left:50px">Teacher's Info</button>
- <button type="button" class="btn btn-default" style="margin-left:50px">Report to Admin</button>
- <hr class="new2">
- <div class="sty" >
- <h3>Purpose: </h3>
-	<ul>
-	 <h4> <li>Check Weekly Progress</li>
-	  <li>Check his learning ability</li>
-	  <li>Many more</li>
-	</ul>
- </div>
- <hr class="new2">
- <button type="button" class="btn btn-default" style="margin-left:100px;">How to Upload</button>
- <button type="submit" formaction="Child_Approval.php" class="btn btn-default" style="margin-left:50px">Add Child</button>
-  <button type="button" class="btn btn-default" style="margin-left:50px">Request For Online Class</button>
- <button type="submit" formaction="SampleVideo.php" class="btn btn-default" style="margin-left:50px">See Sample Video</button>
-<hr class="new2">
-
-<button type="button" class="btn btn-default" style="margin-left:170px">View All Subject</button>
- <button type="button" class="btn btn-default" style="margin-left:50px">View Syllabus</button>
- <button type="button" class="btn btn-default" style="margin-left:50px">Exam Details</button>
- <hr class="new2">
-  </div>
+	<?php
+		$con=mysqli_connect("localhost","root","","software_project");
+		if (mysqli_connect_errno())
+		{
+			echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		}
+		$result = mysqli_query($con,"SELECT * FROM children_account");
+		echo "<table border='1'>
+		<tr>
+			<th>Name</th>
+			<th>Birthday</th>
+			<th>BirthId</th>
+			<th>Class</th>
+			<th>Add A picture</th>
+		</tr>";
+		while($row = mysqli_fetch_array($result))
+		{
+			echo "<tr>";
+			echo "<td>" . $row['Name'] . "</td>";
+			echo "<td>" . $row['Birthday'] . "</td>"; echo "&nbsp";
+			echo "<td>" . $row['Birth_Id'] . "</td>";
+			echo "<td>" . $row['Class'] . "</td>";
+			echo "<td>" ."<input type='image' src='image/learner.png'". "</td>";
+			echo "</tr>";
+		}
+		echo "</table>";
+		
+		mysqli_close($con);
+					?>
 </div>				
 </form>
 </body>

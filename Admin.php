@@ -74,7 +74,6 @@ body {
 <div class="container">
   <div class="sidenav">
   <a href="#about">Home</a>
-  <a href="#services">Profile</a>
   <a href="#clients">View Tutor</a>
   <a href="#contact">View Mentor</a>
 </div>
@@ -92,15 +91,26 @@ body {
 	if(mysqli_num_rows($res) > 0)
 	{
 		$row = mysqli_fetch_array($res);
-		$x = $row['COUNT(Id)'];
+		$childid = $row['COUNT(Id)'];
+		//echo $x;
+	}
+	?>
+	<?php
+	$con = mysqli_connect("localhost","root","","software_project");
+	$sql = "SELECT COUNT(Id) from tutor_info WHERE Class=''";
+	$res = mysqli_query($con,$sql);
+	if(mysqli_num_rows($res) > 0)
+	{
+		$row = mysqli_fetch_array($res);
+		$tutorid = $row['COUNT(Id)'];
 		//echo $x;
 	}
 	?>
  <button type="button" class="btn btn-default" >Check All Report</button>
- <button type="submit" formaction="approved.php" class="btn btn-default" style="margin-left:50px">Learner Approval <span class="badge"><?php echo $x; ?></span></button>
- <button type="button" class="btn btn-default" style="margin-left:50px">Check Tutor info</button>
+ <button type="submit" formaction="approved.php" class="btn btn-default" style="margin-left:50px">Learner Approval <span class="badge"><?php echo $childid; ?></span></button>
+ <button type="submit" formaction="Tutor_Approval.php" class="btn btn-default" style="margin-left:50px">Tutor info <span class="badge"><?php echo $tutorid; ?></span></button>
   <button type="button" class="btn btn-default" style="margin-left:50px">Chat with mentor</button>
- <button type="button" class="btn btn-default" style="margin-left:50px">Tutor Activity</button>
+ <button type="button" class="btn btn-default" style="margin-left:50px">Change Password</button>
  <hr class="new2">
  <div class="sty" >
  <h3>To-Do List: </h3>
@@ -111,7 +121,6 @@ body {
 	</ul>
  </div>
  <hr class="new2">
- <button type="button" class="btn btn-default" >Daily Upload</button>
  <button type="button" class="btn btn-default" style="margin-left:50px">Having an Issue</button>
  <button type="button" class="btn btn-default" style="margin-left:50px">Question Set</button>
   <button type="button" class="btn btn-default" style="margin-left:50px">Mark Sheet</button>

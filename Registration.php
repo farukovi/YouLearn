@@ -43,6 +43,8 @@
 				{
 					$query="INSERT INTO login(Id,Email,Password,Type) VALUES ('','$email','$pwd','Tutor')";
 					mysqli_query($con,$query);
+					$command = "INSERT INTO tutor(Id,Email,Class_num_1,Class_num_1,Class_num_1) VALUES('','$email','','','')";
+					mysqli_query($con,$command);
 					$sql = "INSERT INTO tutor_info(Id,Name,Email,Nid_No,Address,rlgn,gndr,type,picture,phone,password) VALUES ('','$fullname','$email',$Nid_no,'$Address','$rlgn','$gndr','Tutor','$picture',$phone,'$pwd')";
 					if(mysqli_query($con,$sql))
 					{

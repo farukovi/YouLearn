@@ -7,12 +7,16 @@ if(isset($_POST['id']))
 	$result = mysqli_query($con,$sql);
 	while($row = mysqli_fetch_array($result))
 	{
-		$data['Question'] = $row['Name'];
-		$data['Option1'] = $row['Fathers_Name'];
-		$data['Option2'] = $row['Mothers_Name'];
-		$data['Option3'] = $row['Birthday'];
-		$data['Option4'] = $row['Address'];
-		$data['Answer'] = $row['Email'];
+		$data['name'] = $row['Name'];
+		$data['fthr_name'] = $row['Fathers_Name'];
+		$data['mthr_name'] = $row['Mothers_Name'];
+		$data['bday'] = $row['Birthday'];
+		$data['address'] = $row['Address'];
+		$data['bid'] = $row['Birth_Id'];
+		$data['rlgn'] = $row['Religion'];
+		$data['gndr'] = $row['Gender'];
+		$data['class'] = $row['Class'];
+		$data['mail'] = $row['Email'];
 	}
 	echo json_encode($data);
 	mysqli_close($con);

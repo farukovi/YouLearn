@@ -16,7 +16,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-  <link href="css/Account.css" rel="stylesheet" type="text/css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <style>
@@ -63,7 +62,7 @@ body {
 </style>
 </head>
 	<body>
-	<form style="background-color:#808080">
+	<form action="accept.php" method="post" style="background-color:#808080">
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -77,21 +76,20 @@ body {
   
 <div class="container">
   <div class="sidenav">
-  <a href="#about">Home</a>
-  <a href="#services">Profile</a>
+  <a href="Admin.php">Home</a>
   <a href="#clients">View Tutor</a>
   <a href="#contact">View Mentor</a>
 </div>
 
-		<form action="UpdateQues.php" method="POST">
+		<form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
 			<div class="main">
 				
 				<div class="right">
-					<h3>View All Child</h3>
-				</div>
+					<h3>View All Child
+				<br>
 				<div class="text">
 					<select name="emloyee_list" id="emloyee_list">
-						<option value="">SELECT question</option>
+						<option value="">SELECT a Id</option>
 						<?php
 							while($row = mysqli_fetch_array($result))
 							{
@@ -99,37 +97,52 @@ body {
 							}
 						?>
 					</select>
-					<input type="button" id="search" value="Search">
+					<input type="button" id="search" name="srch" value="Search">
 				</div>
 				<hr>
 				<div class="ques">
 					<h3 style="margin-top:20px">Name:
-					<textarea name="ques" id="Question" style="width:300px;height:30px;margin-top:-80px;margin-left:60px"></textarea>
+					<textarea id="usr" name="usr"style="width:300px;height:30px;margin-top:-80px;margin-left:100px"></textarea>
 					
-					<h3>Option 1: 
-					<textarea id="Option1" name="Opt1" style="width:300px;height:30px; margin-left: 110px; margin-top: -65px;"></textarea>
+					<h3>Father's Name: 
+					<textarea id="fthrname" name="fthrname" style="width:300px;height:30px; margin-left: 10px; margin-top: -65px;"></textarea>
 				</div>
 				<div class="opt2">
-					<h3>Option 2: 
-					<textarea id="Option2" name="opt2" style="width:300px;height:30px; margin-left: 110px; margin-top: -45px;"></textarea>    
+					<h3>Mother's Name: 
+					<textarea id="mthrname" name="mthrname" style="width:300px;height:30px; margin-left: 5px; margin-top: -45px;"></textarea>    
 				</div>
 				<div class="opt3">
-					<h3>Option 3: 
-					<textarea id="Option3" name="opt3" style="width:300px;height:30px; margin-left: 110px; margin-top: -45px;"></textarea>
+					<h3>Birth Day: 
+					<textarea id="birthday" name="birth" style="width:300px;height:30px; margin-left: 70px; margin-top: -45px;"></textarea>
 				</div>
 				<div class="opt4">
-					<h3>Option 4: 
-					<textarea id="Option4" name="opt4" style="width:300px;height:30px; margin-left: 110px; margin-top: -45px;"></textarea>
+					<h3>Birth Id: 
+					<textarea id="birthid" name="birthid" style="width:300px;height:30px; margin-left: 95px; margin-top: -45px;"></textarea>
 				</div>
-				<div class="crrct">
-					<h3>Correct Answer: 
-					<textarea id="Answer" name="ans"style="width:400px;height:30px; margin-left: 170px; margin-top: -50px;"></textarea>	
+				<h3>Religion: 
+					<textarea id="rlgn" name="rlgn" style="width:300px;height:30px; margin-left: 85px; margin-top: -65px;"></textarea>
+				</div>
+				<div class="opt2" >
+					<h3>Gender: 
+					<textarea id="gndr" name="gndr" style="width:300px;height:30px; margin-left: 90px; margin-top: -45px;"></textarea>    
+				</div>
+				<div class="opt3" >
+					<h3>Class: 
+					<textarea id="clss" name="clss" style="width:300px;height:30px; margin-left: 110px; margin-top: -45px;"></textarea>
+				</div>
+				<div class="opt4" 
+					<h3>Address: 
+					<textarea id="add" name="add" style="width:300px;height:30px; margin-left: 65px; margin-top: -45px;"></textarea>
+				</div>
+				<div class="mail" >
+				<h3>Email: 
+					<textarea id="mail" name="mail" style="width:300px;height:30px; margin-left: 108px; margin-top: -65px;"></textarea>
+					<input type="submit" name="submit" value="Submit">
 				</div>
 				<div class="add">
-					<input type="submit" name="add" value="Update">
-				</div>
+					</div>
 				<div class="footer">
-					
+					<hr>
 				</div>	
 			</div>
 		</form>
@@ -148,12 +161,16 @@ $(document).ready(function(){
 				dataType:"JSON",
 				success:function(data)
 				{
-					$('#Question').text(data.Question);
-					$('#Option1').text(data.Option1);
-					$('#Option2').text(data.Option2);
-					$('#Option3').text(data.Option3);
-					$('#Option4').text(data.Option4);
-					$('#Answer').text(data.Answer);
+					$('#usr').text(data.name);
+					$('#fthrname').text(data.fthr_name);
+					$('#mthrname').text(data.mthr_name);
+					$('#birthday').text(data.bday);
+					$('#birthid').text(data.bid);
+					$('#rlgn').text(data.rlgn);
+					$('#gndr').text(data.gndr);
+					$('#add').text(data.address);
+					$('#clss').text(data.class);
+					$('#mail').text(data.mail);
 				}
 			})
 		}

@@ -74,16 +74,16 @@ body {
   
 <div class="container">
   <div class="sidenav">
-  <a href="#about">Home</a>
+  <a href="Tutor.php">Home</a>
   <a href="ProfileTutor.php">Profile</a>
-  <a href="#clients">Upload Section</a>
+  <a href="UploadContent.php">Upload Section</a>
   <a href="#contact">Contact</a>
 </div>
 
 <div class="main">
 <h2><center>Welcome to Tutor Home page</center></h2>
 <div class="alert alert-info">
-    <strong>Hello Sithi:</strong> You're assigned to Play Group.You have to cover the syllabus with your video content.
+    <strong>Hello <?php echo $_SESSION['TutorName']; ?></strong> You're assigned to Play Group.You have to cover the syllabus with your video content.
   </div>
   <hr class="new2">
  <button type="button" class="btn btn-default" >View all the student</button>
