@@ -9,7 +9,6 @@
 		$gndr = $_POST['gndr'];
 		$type = $_POST['type'];
 		$Address = $_POST['usr_address'];
-		$picture = $_POST['usr_pic'];
 		$phone = $_POST['usr_phone'];
 		$pwd = $_POST['pwd'];
 		$cnfrm_pwd = $_POST['cnfrm_pwd'];
@@ -29,7 +28,7 @@
 					$query="INSERT INTO login(Id,Email,Password,Type) VALUES ('','$email','$pwd','Mentor')";
 					mysqli_query($con,$query);
 					
-					$sql = "INSERT INTO mentor_info(Id,Name,Email,Nid_No,Address,rlgn,gndr,type,picture,phone,password) VALUES('','$fullname','$email',$Nid_no,'$Address','$rlgn','$gndr','Mentor','$picture',$phone,'$pwd')";
+					$sql = "INSERT INTO mentor_info(Id,Name,Email,Nid_No,Address,rlgn,gndr,type,phone,password) VALUES('','$fullname','$email',$Nid_no,'$Address','$rlgn','$gndr','Mentor',$phone,'$pwd')";
 					if(mysqli_query($con,$sql))
 					{
 						mail($email,'registration','Congratulations!!!Your Profile is ready for use as a mentor.Go to the site and add your child','from:YouLearn');
@@ -45,7 +44,7 @@
 					mysqli_query($con,$query);
 					$command = "INSERT INTO tutor(Id,Email,Class_num_1,Class_num_1,Class_num_1) VALUES('','$email','','','')";
 					mysqli_query($con,$command);
-					$sql = "INSERT INTO tutor_info(Id,Name,Email,Nid_No,Address,rlgn,gndr,type,picture,phone,password) VALUES ('','$fullname','$email',$Nid_no,'$Address','$rlgn','$gndr','Tutor','$picture',$phone,'$pwd')";
+					$sql = "INSERT INTO tutor_info(Id,Name,Email,Nid_No,Address,rlgn,gndr,type,phone,password) VALUES ('','$fullname','$email',$Nid_no,'$Address','$rlgn','$gndr','Tutor',$phone,'$pwd')";
 					if(mysqli_query($con,$sql))
 					{
 						mail($email,'registration','Congratulations!!!Your Request for Tutor in YouLearn has been accepted.You can now use our dashboard','from:YouLearn');						
@@ -58,7 +57,7 @@
 			}
 			mysqli_close($con);
 		}
-		if($first_name!=""||$last_name!=""||$email!=""||$Nid_no!=""||$rlgn!=""||$gndr!=""||$type!=""||$picture!=""||$phone!=""||$pwd!=""||$cnfrm_pwd!="")
+		if($first_name!=""||$last_name!=""||$email!=""||$Nid_no!=""||$rlgn!=""||$gndr!=""||$type!=""||$phone!=""||$pwd!=""||$cnfrm_pwd!="")
 		{
 			if(strlen($phone)==11)
 			{
@@ -106,7 +105,7 @@
 								echo '</script>';
 							}	
 						}
-						Insert($fullname,$email,$Nid_no,$Address,$rlgn,$gndr,$type,$picture,$phone,$pwd);
+						Insert($fullname,$email,$Nid_no,$Address,$rlgn,$gndr,$type,$phone,$pwd);
 					}
 					else
 					{

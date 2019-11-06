@@ -59,7 +59,13 @@ if(isset($_POST['login']))
 		$_SESSION['name'] = $row['Id'];
 		if($type=="Admin")
 		{
-			header("Location:Admin.php");
+			//header("Location:Admin.php");
+			?>
+			<script>
+				window.alert('Login Success, Welcome Admin!');
+				window.location.href='Admin/Admin.php';
+			</script>
+			<?php
 		}
 		else if($type=="Tutor")
 		{
@@ -70,7 +76,13 @@ if(isset($_POST['login']))
 				$rows = mysqli_fetch_array($res);
 				$_SESSION['TutorId'] = $rows['Id'];
 				$_SESSION['TutorName'] = $rows['Name'];
-				header("Location:Tutor.php");
+				//header("Location:Tutor.php");
+				?>
+			<script>
+				window.alert('Login Success, Welcome Admin!');
+				window.location.href='Tutor/Tutor.php';
+			</script>
+			<?php
 			}	
 		}
 		else if($type=="Mentor")
@@ -82,7 +94,14 @@ if(isset($_POST['login']))
 				$rows = mysqli_fetch_array($res);
 				$_SESSION['MentorName'] = $rows['Name'];
 				$_SESSION['TutorId'] = $rows['Id'];
-				header("Location:Mentor.php");
+				$_SESSION['email'] = $rows['Email'];
+				//header("Location:Mentor.php");
+				?>
+				<script>
+					window.alert('Login Success, Welcome Admin!');
+					window.location.href='Mentor/Mentor.php';
+				</script>
+				<?php
 			}
 		}
 		else if($type=="Child")
