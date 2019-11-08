@@ -107,6 +107,7 @@ body {
   <hr class="new2">
  <button type="button" class="btn btn-default" >View all the student</button>
   <button type="button" class="btn btn-default" style="margin-left:50px">Mail to a Mentor</button>
+  <button type="button" class="btn btn-default" style="margin-left:50px">Notification</button>
  <button type="button" class="btn btn-default" style="margin-left:50px">Report to Admin</button>
  <hr class="new2">
  <div class="sty" >
@@ -120,7 +121,7 @@ body {
  <hr class="new2">
  <button type="button" class="btn btn-default" >How to Upload</button>
  <button type="button" class="btn btn-default" style="margin-left:50px">Having trouble?</button>
- <button type="button" class="btn btn-default" style="margin-left:50px">Video formattiong</button>
+ <button type="button" class="btn btn-default" style="margin-left:50px">Take Online Class</button>
   <button type="button" class="btn btn-default" style="margin-left:50px">Video Editing</button>
  <button type="submit" formaction="SampleVideo.php" class="btn btn-default" style="margin-left:50px">See Sample Video</button>
 <hr class="new2">

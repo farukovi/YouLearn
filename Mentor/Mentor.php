@@ -109,7 +109,7 @@ body {
  <button type="button" class="btn btn-default" style="margin-left:50px">Save Child Login</button>
  <button type="button" class="btn btn-default" style="margin-left:50px">Bookmarks</button>
   <button type="button" class="btn btn-default" style="margin-left:50px">Teacher's Info</button>
- <button type="button" class="btn btn-default" style="margin-left:50px">Report to Admin</button>
+ <button type="submit" formaction="Chat.php" class="btn btn-default" style="margin-left:50px">Chat with Admin</button>
  <hr class="new2">
  <div class="sty" >
  <h3>Purpose: </h3>

@@ -79,7 +79,7 @@ body {
 </div>
 
 <div class="main">
-<h2><center>Welcome to Tutor Home page</center></h2>
+<h2><center>Welcome to Admin Home page</center></h2>
 <div class="alert alert-info">
     <strong>Hello Faruk:</strong> This is Admin Home.Here You can complete all your admin work.
   </div>
@@ -106,11 +106,22 @@ body {
 		//echo $x;
 	}
 	?>
+	<?php
+	$con = mysqli_connect("localhost","root","","software_project");
+	$sql = "SELECT COUNT(Id) from chat WHERE Seen='1'";
+	$res = mysqli_query($con,$sql);
+	if(mysqli_num_rows($res) > 0)
+	{
+		$row = mysqli_fetch_array($res);
+		$new_text = $row['COUNT(Id)'];
+		//echo $x;
+	}
+	?>
  <button type="button" class="btn btn-default" >Check All Report</button>
  <button type="submit" formaction="approved.php" class="btn btn-default" style="margin-left:50px">Learner Approval <span class="badge"><?php echo $childid; ?></span></button>
  <button type="submit" formaction="Tutor_Approval.php" class="btn btn-default" style="margin-left:50px">Tutor info <span class="badge"><?php echo $tutorid; ?></span></button>
-  <button type="button" class="btn btn-default" style="margin-left:50px">Chat with mentor</button>
- <button type="button" class="btn btn-default" style="margin-left:50px">Change Password</button>
+  <button type="submit" formaction="Chat.php" class="btn btn-default" style="margin-left:50px">Chat with mentor <span class="badge"><?php echo $new_text; ?></span></button>
+ <button type="submit" formaction="Change.php" class="btn btn-default" style="margin-left:50px">Change Password</button>
  <hr class="new2">
  <div class="sty" >
  <h3>To-Do List: </h3>

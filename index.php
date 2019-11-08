@@ -59,6 +59,7 @@ if(isset($_POST['login']))
 		$_SESSION['name'] = $row['Id'];
 		if($type=="Admin")
 		{
+			//$_SESSION['mail'] = $email;
 			//header("Location:Admin.php");
 			?>
 			<script>
