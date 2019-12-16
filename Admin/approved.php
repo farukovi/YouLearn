@@ -5,7 +5,7 @@
 		header("Location:index.php");
 	}
 	$con = mysqli_connect("localhost","root","","software_project");
-	$sql = "SELECT * FROM children_account ORDER BY Id ASC";
+	$sql = "SELECT * FROM children_account where accept = '0' ORDER BY Id ASC";
 	$result = mysqli_query($con,$sql);
 ?>
 
@@ -24,13 +24,12 @@ body {
 }
 
 .sidenav {
-  height: 100%;
-  width: 260px;
+  width: 20%;
   position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #111;
+  background-color: #808080;
   overflow-x: hidden;
   padding-top: 20px;
   margin-top: 52px;
@@ -40,7 +39,7 @@ body {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
   font-size: 25px;
-  color: #818181;
+  color: black;
   display: block;
 }
 
@@ -49,7 +48,7 @@ body {
 }
 
 .main {
-  margin-left: 160px; /* Same as the width of the sidenav */
+  margin-left: 180px; /* Same as the width of the sidenav */
   font-size: 28px; /* Increased text to enable scrolling */
   padding: 0px 10px;
 }
@@ -76,16 +75,16 @@ body {
   
 <div class="container">
   <div class="sidenav">
-  <a href="Admin.php">Home</a>
-  <a href="#clients">View Tutor</a>
-  <a href="#contact">View Mentor</a>
+  <a href="Admin.php"><center>Home</center></a>
+  <a href="ViewTutor.php"><center>View Tutor</center></a>
+  <a href="ViewMentor.php"><center>View Mentor</center></a>
 </div>
 
 		<form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
 			<div class="main">
 				
 				<div class="right">
-					<h3>View All Child
+					<h3>View All Child</h3>
 				<br>
 				<div class="text">
 					<select name="emloyee_list" id="emloyee_list">

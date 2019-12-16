@@ -47,7 +47,7 @@ body {
 
 <form action="Password.php" method="post">
 <div class="container">
-  <img src="image/yl.jpg" alt="Notebook" style="width:100%;">
+  <img src="image/admin.jpg" alt="Notebook" style="width:100%;">
   <div class="content">
     <h1>Change Password:</h1>
 		Old Password:   <input type="password" name="old_pass" placeholder="Enter Your Old Password"><br><br>

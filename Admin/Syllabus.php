@@ -1,15 +1,10 @@
 <?php
-	session_start();
-	if(!isset($_SESSION['name']))
-	{
-		header("Location:index.php");
-	}
-	$con = mysqli_connect("localhost","root","","software_project");
-	$sql = "SELECT * FROM tutor_info ORDER BY Id ASC";
-	$result = mysqli_query($con,$sql);
-	mysqli_close($con);
+session_start();
+if(!isset($_SESSION['name']))
+{
+	header("Location:YouLearn.html");
+}
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +12,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link href="css/Account.css" rel="stylesheet" type="text/css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <style>
@@ -58,16 +54,10 @@ body {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
-table,th,td {
-  border : 1px solid black;
-  border-collapse: collapse;
-}
-th,td {
-  padding: 5px;
-}
+
 </style>
 </head>
-	<body>
+<body>
 <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" style="background-color:#808080">
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -82,42 +72,45 @@ th,td {
   
 <div class="container">
   <div class="sidenav">
-  <a href="Admin.php"><center>Home</center></a>
+<a href="Admin.php"><center>Home</center></a>
   <a href="ViewTutor.php"><center>View Tutor</center></a>
   <a href="ViewMentor.php"><center>View Mentor</center></a>
 </div>
+
 <div class="main">
-<select name="customers" onchange="showCustomer(this.value)">
-<option value="">Message:</option>
+<h2><center>Welcome to Admin Home page</center></h2>
+<div class="alert alert-info">
+    <strong>Hello Faruk:</strong> This is Admin Home.Here You can complete all your admin work.
+  </div>
+  <hr class="new2">
+  Upload File: <input type="file" name="file">
+  <hr>
+  <input type="submit" name="sbmt">
+  <hr>
+  
+</div>
+</div>
+</form>
+</body>
+</html>
 <?php
-	while($row = mysqli_fetch_array($result))
+	if(isset($_POST['sbmt']))
 	{
-		echo '<option value="'.$row['Id'].'">'.$row["Id"].'</option>';
+		$file_name = $_FILES['file']['name'];
+		$file_type = $_FILES['file']['type'];
+		$file_size = $_FILES['file']['size'];
+		$file_tem_loc = $_FILES['file']['tmp_name'];
+		$file_store = "upload/".$file_name;
+	
+		move_uploaded_file($file_tem_loc,$file_store);
+		//$con = mysqli_connect("localhost","root","","software_project");
+		//$sql="INSERT INTO picture(Id,Name,Source,Type) VALUES('','$file_name','$file_store','$name')";
+		// if(mysqli_query($con,$sql))
+		// {
+			// echo '<script language="javascript">';
+			// echo 'alert("Done!!!!"); 
+			// location.href="ProfileMentor.php"';
+			// echo '</script>';
+		// }
 	}
 ?>
-</select>
-</form>
-		<div id="txtHint">Teachers info will be listed here...</div>
-		</div>
-		<script>
-
-function showCustomer(str) {
-  var xhttp;   
-'alert(str);  '
-  if (str == "") {
-    document.getElementById("txtHint").innerHTML = "";
-    return;
-  }
-  xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("txtHint").innerHTML = this.responseText;
-    }
-  };
-  xhttp.open("GET", "fetchtutorinfo.php?q="+str, true);
-  xhttp.send();
-}
-</script>
-	</body>
-</html>
-

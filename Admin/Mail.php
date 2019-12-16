@@ -26,7 +26,7 @@ function getName($n) {
     return $randomString; 
 } 
 	$x = getName($n);	
-	echo $email; 
+	//echo $email; 
 	$query = "UPDATE login SET Password='$x' WHERE Id='$id'";
 	mysqli_query($con,$query);
 	if(mail($email,'Change Password','Password: '.$x.'  This is your new password.','from:youlearn')){

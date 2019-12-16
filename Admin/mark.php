@@ -4,7 +4,9 @@ if(!isset($_SESSION['name']))
 {
 	header("Location:YouLearn.html");
 }
-
+$con = mysqli_connect("localhost","root","","software_project");
+	$sql = "SELECT * FROM resultofplay";
+	$result = mysqli_query($con,$sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,16 +15,16 @@ if(!isset($_SESSION['name']))
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link href="css/Account.css" rel="stylesheet" type="text/css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <style>
 body {
   font-family: "Lato", sans-serif;
-  position: relative;
 }
 
 .sidenav {
-  width: 360px;
+  width: 200px;
   position: fixed;
   z-index: 1;
   top: 0;
@@ -44,28 +46,22 @@ body {
 .sidenav a:hover {
   color: #f1f1f1;
 }
-div.ex1 {
-  width: 450px;
-  height: 430px;
-  overflow: scroll;
-}
+
 .main {
-  margin-left: 320px; /* Same as the width of the sidenav */
+  margin-left: 160px; /* Same as the width of the sidenav */
   font-size: 28px; /* Increased text to enable scrolling */
   padding: 0px 10px;
-  background-color: #808080;
 }
 
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
-.message_box{border: 1px solid black; width:450px; height: 480px; margin-left: 150px;}
-.message_area{width: 100%;  height: 430px;}
+
 </style>
 </head>
-<body data-spy="scroll" data-target=".navbar" data-offset="50" style="background-color:#808080">
-
+<body>
+<form action="#" method="post" style="background-color:#808080">
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -76,6 +72,7 @@ div.ex1 {
     </ul>
   </div>
 </nav>
+  
 <div class="container">
   <div class="sidenav">
    <a href="Admin.php"><center>Home</center></a>
@@ -84,54 +81,47 @@ div.ex1 {
 </div>
 
 <div class="main">
-	<center>Welcome Admin</center>
-		<hr class="new2">
-		
-		<div class="message_box">
-			<div class="ex1">
-			<div class="message_area">
-			<?php
-				$con=mysqli_connect("localhost","root","","software_project");
-				$sql = "SELECT * FROM chat";
-				$res = mysqli_query($con,$sql);
-				while($row=mysqli_fetch_assoc($res))
-				{
-					$naam = $row['Mail'];
-					$text = $row['Message'];
-					$when = $row['DateTime'];
-					echo '<h6 style="color:white">'.$naam ." ". $when .'</h6>';
-					echo '<p>'.$text.'</p>';
-					echo '<hr>';
-				}
-			?>
-			<?php
-				if(isset($_POST['sbmt']))
-				{
-					$name = 'Faruk';
-					$mssg = $_POST['mssg'];
-					date_default_timezone_set("Asia/Dhaka");
-					$timer = date("h:i:sa");
-					$con=mysqli_connect("localhost","root","","software_project");
-					$query = "INSERT INTO chat(Id,Mail,Message,DateTime,Seen) VALUES('','$name','$mssg','$timer','1')";
-						//echo $query;
-					if(mysqli_query($con,$query))
-					{
-						header("Location: Chat.php");
-					}
-					$command = "UPDATE chat SET Seen=0";
-					mysqli_query($con,$command);
-				}
-			?>
-			</div>
-			</div>
-			<form method="post">
-				<input type="text" name="mssg"  placeholder="Type Your Text Here!">
-				<input type="submit" name="sbmt" value="Sent">
-			</form>
-		
-		</div>
+<h2><center>Welcome to Admin Home page</center></h2>
+<div class="alert alert-info">
+    <strong>Hello Faruk:</strong> This is Admin Home.Here You can complete all your admin work.
   </div>
-  <br>
-</div>				
+ <hr class="new2">
+<?php
+	$con=mysqli_connect("localhost","root","","software_project");
+						if (mysqli_connect_errno())
+						{
+							echo "Failed to connect to MySQL: " . mysqli_connect_error();
+						}
+						$result = mysqli_query($con,"SELECT * FROM resultofplay");
+						echo "<table border='1'>
+						<tr>
+							<th>Name</th>
+							<th>Mentormail</th>
+							<th>Bangla</th>
+							<th>English</th>
+							<th>Math</th>
+							<th>Digit</th>
+							<th>Poem</th>
+						</tr>";
+
+						while($row = mysqli_fetch_array($result))
+						{
+							echo "<tr>";
+							echo "<td>" . $row['ChildId'] . "</td>";
+							echo "<td>" . $row['Mail'] . "</td>";
+							echo "<td>" . $row['Bangla'] . "</td>";
+							echo "<td>" . $row['English'] . "</td>";
+							echo "<td>" . $row['Math'] . "</td>";
+							echo "<td>" . $row['Digit'] . "</td>";
+							echo "<td>" . $row['Poem'] . "</td>";
+							echo "</tr>";
+						}
+						echo "</table>";
+
+						mysqli_close($con);
+					?>
+</div>
+</div>
+</form>
 </body>
 </html>

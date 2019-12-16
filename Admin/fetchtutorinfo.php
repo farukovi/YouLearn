@@ -1,22 +1,37 @@
 <?php
-if(isset($_POST['id']))
-{
-	$x = $_POST['id'];
-	$con = mysqli_connect("localhost","root","","software_project");
-	$sql = "SELECT * FROM tutor_info WHERE Id = '$x'";
-	$result = mysqli_query($con,$sql);
-	while($row = mysqli_fetch_array($result))
-	{
-		$data['name'] = $row['Name'];
-		$data['fthr_name'] = $row['Email'];
-		$data['mthr_name'] = $row['Nid_No'];
-		$data['bday'] = $row['rlgn'];
-		$data['address'] = $row['Address'];
-		$data['rlgn'] = $row['phone'];
-		$data['gndr'] = $row['gndr'];
-		$data['class'] = $row['picture'];
-	}
-	echo json_encode($data);
-	mysqli_close($con);
+$mysqli = new mysqli("localhost", "root", "", "software_project");
+if($mysqli->connect_error) {
+  exit('Could not connect');
 }
+$con = mysqli_connect("localhost","root","","software_project");
+$sql = "SELECT Name,Email,Address,Phone from tutor_info WHERE Id = ?";
+mysqli_close($con);
+
+$stmt = $mysqli->prepare($sql);
+$stmt->bind_param("s", $_GET['q']);
+$stmt->execute();
+$stmt->store_result();
+$stmt->bind_result($cname,$cmail,$caddress,$cphone);
+$stmt->fetch();
+$stmt->close();
+echo "<form action='sent.php' method='POST'>";
+echo "<table>";
+echo "<tr>";
+echo "<th>Name</th>";
+echo "<td><h1>". $cname . "</h1></td>";
+echo "</tr>";
+echo "<tr>";
+echo "<th>Email</th>";
+echo "<td>" . $cmail . "</td>";
+echo "</tr>";
+echo "<tr>";
+echo "<th>Address</th>";
+echo "<td>" . $caddress . "</td>";
+echo "</tr>";
+echo "<tr>";
+echo "<th>Phone</th>";
+echo "<td>0" . $cphone . "</td>";
+echo "</tr>";
+echo "</table>";
+echo "</form>";
 ?>
