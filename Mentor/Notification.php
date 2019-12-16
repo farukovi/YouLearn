@@ -84,9 +84,9 @@ body {
 	}
  ?>
 <body>
-<form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" enctype="multipart/form-data" style="background-color:#98FB98">
+<form action="#" method="post"style="background-color:#98FB98">
 <nav class="navbar navbar-inverse">
-  <div class="container-fluid" style="background-color:black">
+  <div class="container-fluid"style="background-color:black">
     <div class="navbar-header">
       <a class="navbar-brand" href="#" style="font-size:30px;">YouLearn: Mentor Panel</a>
     </div>
@@ -108,76 +108,52 @@ body {
  ?>
 <div class="container">
   <div class="sidenav">
-  <img src=<?php echo $src; ?> class="img-circle" alt="Cinque Terre" width="25%" height="25%"> 
-  <a href="#about">Home</a>
-  <?php
-	if($num == 0)
-	{
-		echo '<a href="ProfileMentor.php">Profile<span class="badge">Upload Your Pic</span></a>';
-	}
-	else
-	{
-		echo '<a href="ProfileMentor.php">Profile</a>';
-	}
-  ?>
+ <img src=<?php echo $src; ?> class="img-circle" alt="Cinque Terre" width="90%" height="90%" style="margin-left: 15px">
+  <a href="Mentor.php"><center>Home</a>
+  <a href="ProfileMentor.php">Profile</a>
   <a href="ViewChildInfo.php">View Child Info</a>
+  <a href="UploadContent.php">Upload Section</center></a>
 </div>
-
 <div class="main">
 <center>Welcome to Mentor Home page</center>
 
 <div class="alert alert-info">
     <strong>Hello <?php echo $_SESSION['MentorName']; ?></strong> This is your DashBoard.You can check Your child's activity from here. 
   </div>
-  <hr class="new2">
   <?php
-	$con = mysqli_connect("localhost","root","","software_project");
-	$name = $_SESSION['MentorName'];	
-	$sql = "SELECT * FROM Mentor_info WHERE Name='$name'";
-	$res = mysqli_query($con,$sql);
-	if(mysqli_num_rows($res) > 0)
-	{
-		$row = mysqli_fetch_array($res);
-		$name = $row['Name'];
-		$mail = $row['Email'];
-		$Nid = $row['Nid_No'];
-		$add = $row['Address'];
-		$phone = $row['phone'];
-	}
-  ?>
-	<div class="opt2">
-		<h3>Name: <?php echo $name;?>
-		<h3>Mail: <?php echo $mail;?>
-		<h3>Nid: <?php echo $Nid;?>
-		<h3>Address: <?php echo $add;?>
-		<h3>Phone: <?php echo "0".$phone;?>
-		</div>
-		<hr class="new2">
-		Select Picture:<input type="file" name="file" >
-		<input type="Submit" name="Submit">
+		$con=mysqli_connect("localhost","root","","software_project");
+		if (mysqli_connect_errno())
+		{
+			echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		}
+		$name = $_SESSION['email'];
+		$result = mysqli_query($con,"SELECT * FROM resultofplay where Mail='$name'");
+		echo "<table border='1'>
+		<tr>
+			<th>Student Name</th>
+			<th>Bangla</th>
+			<th>English</th>
+			<th>Math</th>
+			<th>Digit</th>
+			<th>Poem</th>
+		</tr>";
+		while($row = mysqli_fetch_array($result))
+		{
+			echo "<tr>";
+			echo "<td>" . $row['ChildId'] . "</td>";
+			echo "<td>" . $row['Bangla'] . "</td>"; echo "&nbsp";
+			echo "<td>" . $row['English'] . "</td>";
+			echo "<td>" . $row['Math'] . "</td>";
+			echo "<td>" . $row['Digit'] . "</td>";
+			echo "<td>" . $row['Poem'] . "</td>";
+			echo "</tr>";
+		}
+		echo "</table>";
 		
+		mysqli_close($con);
+	?>
+  </div>
 </div>				
 </form>
 </body>
 </html>
-<?php
-	if(isset($_POST['Submit']))
-	{
-		$file_name = $_FILES['file']['name'];
-		$file_type = $_FILES['file']['type'];
-		$file_size = $_FILES['file']['size'];
-		$file_tem_loc = $_FILES['file']['tmp_name'];
-		$file_store = "upload/".$file_name;
-	
-		move_uploaded_file($file_tem_loc,$file_store);
-		$con = mysqli_connect("localhost","root","","software_project");
-		$sql="INSERT INTO picture(Id,Name,Source,Type) VALUES('','$file_name','$file_store','$name')";
-		if(mysqli_query($con,$sql))
-		{
-			echo '<script language="javascript">';
-			echo 'alert("Done!!!!"); 
-			location.href="ProfileMentor.php"';
-			echo '</script>';
-		}
-	}
-?>

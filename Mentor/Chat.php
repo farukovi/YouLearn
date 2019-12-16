@@ -22,13 +22,12 @@ body {
 }
 
 .sidenav {
-  height: 100%;
-  width: 360px;
+  width: 220px;
   position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #111;
+  background-color: #98FB98;
   overflow-x: hidden;
   padding-top: 20px;
   margin-top: 52px;
@@ -54,7 +53,7 @@ div.ex1 {
   margin-left: 320px; /* Same as the width of the sidenav */
   font-size: 28px; /* Increased text to enable scrolling */
   padding: 0px 10px;
-  background-color: #808080;
+  background-color:#98FB98;
 }
 
 @media screen and (max-height: 450px) {
@@ -64,10 +63,37 @@ div.ex1 {
 .message_box{border: 1px solid black; width:450px; height: 480px; margin-left: 150px;}
 .message_area{width: 100%;  height: 430px;}
 </style>
+<?php
+	$con = mysqli_connect("localhost","root","","software_project");
+	$name = $_SESSION['MentorName'];	
+	$mail = $_SESSION['email'];
+	$sql = "SELECT COUNT(Name) FROM picture WHERE Type='$name'";
+	$sqlno = "SELECT COUNT(Id) FROM mssg WHERE MailFrom = ''";
+	$res = mysqli_query($con,$sql);
+	if(mysqli_num_rows($res) > 0)
+	{
+		$row = mysqli_fetch_array($res);
+		$num = $row['COUNT(Name)'];
+	}
+	$result = mysqli_query($con,$sqlno);
+	if(mysqli_num_rows($result) > 0)
+	{
+		$row = mysqli_fetch_array($result);
+		$nom = $row['COUNT(Id)'];
+	}
+	$sql="SELECT * FROM picture WHERE Type='$name'";
+	$result=mysqli_query($con,$sql);	
+	if(mysqli_num_rows($result)>0)
+	{
+		$row = mysqli_fetch_array($result);
+		$src = $row['Source'];
+	}
+ ?>
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
+<form action="#" method="post" style="background-color:#98FB98">
 <nav class="navbar navbar-inverse">
-  <div class="container-fluid">
+  <div class="container-fluid" style="background-color:black">
     <div class="navbar-header">
       <a class="navbar-brand" href="#" style="font-size:30px;">YouLearn: Mentor Panel</a>
     </div>
@@ -78,10 +104,11 @@ div.ex1 {
 </nav>
 <div class="container">
   <div class="sidenav">
-  <a href="#about">Home</a>
+  <img src=<?php echo $src; ?> class="img-circle" alt="Cinque Terre" width="90%" height="90%" style="margin-left: 15px">
+  <a href="Mentor.php"><center>Home</a>
   <a href="ProfileMentor.php">Profile</a>
   <a href="ViewChildInfo.php">View Child Info</a>
-  <a href="#contact">Contact</a>
+  <a href="UploadContent.php">Upload Section</center></a>
 </div>
 
 <div class="main">
@@ -105,7 +132,21 @@ div.ex1 {
 					echo '<hr>';
 				}
 			?>
-			<?php
+			
+			
+			</div>
+			</div>
+				<input type="text" name="mssg"  placeholder="Type Your Text Here!">
+				<input type="submit" name="sbmt" value="Sent">
+			</form>
+		
+		</div>
+  </div>
+  <br>
+</div>				
+</body>
+</html>
+<?php
 				if(isset($_POST['sbmt']))
 				{
 					$name = $_SESSION['MentorName'];
@@ -121,16 +162,3 @@ div.ex1 {
 					}
 				}
 			?>
-			</div>
-			</div>
-			<form method="post">
-				<input type="text" name="mssg"  placeholder="Type Your Text Here!">
-				<input type="submit" name="sbmt" value="Sent">
-			</form>
-		
-		</div>
-  </div>
-  <br>
-</div>				
-</body>
-</html>

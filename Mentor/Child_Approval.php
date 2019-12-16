@@ -27,7 +27,7 @@ $id = $_SESSION['TutorId'];
 </style>
 <div class="container">
 	<form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-		<div class="jumbotron" style="background:#92a8d1">
+		<div class="jumbotron" style="background:#98FB98">
 			<h1 class="text-center">Child Approval</h1><div class="form-group">
 			  <label for="usr">Name:</label>
 			  <input type="text" class="form-control" name="usr">
@@ -121,8 +121,9 @@ $id = $_SESSION['TutorId'];
 			}
 			else
 			{
+				$pass = mt_rand(1000, 10000);
 				$txt = "Hello " .$fthr_name. "Your Child: " .$name. " account has been created.We send your child info to our admin panel.Wait for the confirmation!!!";
-				$sql = "INSERT INTO children_account(Id,Name,Fathers_Name,Mothers_Name,Birthday,Birth_Id,Religion,Gender,Class,Address,Email,MentorId) VALUES('','$name','$fthr_name','$mthr_name','$bday',$brth,'$rlgn','$gndr','$class','$add','$email',$id)";
+				$sql = "INSERT INTO children_account(Id,Name,Fathers_Name,Mothers_Name,Birthday,Birth_Id,Religion,Gender,Class,Address,Email,MentorId,Accept,Password) VALUES('','$name','$fthr_name','$mthr_name','$bday',$brth,'$rlgn','$gndr','$class','$add','$email',$id,'0','$pass')";
 				if(mysqli_query($con,$sql))
 				{
 					mail($email,'Registration',$txt,'from:YouLearn');
@@ -138,47 +139,6 @@ $id = $_SESSION['TutorId'];
 		{
 			if(strlen($brth)>=11)
 			{
-				for($i=0;$i<strlen($name);$i++)
-				{
-					if((ord($name[$i])>=65 && ord($name[$i])<=90) || (ord($name[$i])>=97 && ord($name[$i])<=122) || ord($name[$i])==32)
-					{
-						for($i=0;$i<strlen($mthr_name);$i++)
-						{
-							if((ord($mthr_name[$i])>=65 && ord($mthr_name[$i])<=90) || (ord($mthr_name[$i])>=97 && ord($mthr_name[$i])<=122) || ord($mthr_name[$i])==32)
-							{
-								for($i=0;$i<strlen($fthr_name);$i++)
-								{
-									if((ord($fthr_name[$i])>=65 && ord($fthr_name[$i])<=90) || (ord($fthr_name[$i])>=97 && ord($fthr_name[$i])<=122) || ord($fthr_name[$i])==32)
-									{
-										$ftr = $fthr_name;
-									}
-									else
-									{
-										echo '<script language="javascript">';
-										echo 'alert("Name must contain only digit");
-										location.href="Child_Approval.php"';
-										echo '</script>';
-									}
-								}
-							}
-							else
-							{
-								echo '<script language="javascript">';
-								echo 'alert("Name must contain only letters");
-								location.href="Child_Approval.php"';
-								echo '</script>';
-							}
-						}
-					}
-					else
-					{
-						echo '<script language="javascript">';
-						echo 'alert("Name Name must contain only letters");
-						location.href="Child_Approval.php"';
-						echo '</script>';
-					}	
-				}
-	
 				Insert($name,$fthr_name,$mthr_name,$bday,$brth,$gndr,$rlgn,$class,$email,$id,$add);
 			}
 			else

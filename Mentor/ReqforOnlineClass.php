@@ -84,7 +84,7 @@ body {
 	}
  ?>
 <body>
-<form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" enctype="multipart/form-data" style="background-color:#98FB98">
+<form style="background-color:#98FB98">
 <nav class="navbar navbar-inverse">
   <div class="container-fluid" style="background-color:black">
     <div class="navbar-header">
@@ -113,7 +113,7 @@ body {
   <?php
 	if($num == 0)
 	{
-		echo '<a href="ProfileMentor.php">Profile<span class="badge">Upload Your Pic</span></a>';
+		echo '<a href="PictureMentor.php">Profile<span class="badge">Upload Your Pic</span></a>';
 	}
 	else
 	{
@@ -121,6 +121,7 @@ body {
 	}
   ?>
   <a href="ViewChildInfo.php">View Child Info</a>
+  <a href="UploadContent.php">Upload Section</a>
 </div>
 
 <div class="main">
@@ -129,55 +130,10 @@ body {
 <div class="alert alert-info">
     <strong>Hello <?php echo $_SESSION['MentorName']; ?></strong> This is your DashBoard.You can check Your child's activity from here. 
   </div>
-  <hr class="new2">
-  <?php
-	$con = mysqli_connect("localhost","root","","software_project");
-	$name = $_SESSION['MentorName'];	
-	$sql = "SELECT * FROM Mentor_info WHERE Name='$name'";
-	$res = mysqli_query($con,$sql);
-	if(mysqli_num_rows($res) > 0)
-	{
-		$row = mysqli_fetch_array($res);
-		$name = $row['Name'];
-		$mail = $row['Email'];
-		$Nid = $row['Nid_No'];
-		$add = $row['Address'];
-		$phone = $row['phone'];
-	}
-  ?>
-	<div class="opt2">
-		<h3>Name: <?php echo $name;?>
-		<h3>Mail: <?php echo $mail;?>
-		<h3>Nid: <?php echo $Nid;?>
-		<h3>Address: <?php echo $add;?>
-		<h3>Phone: <?php echo "0".$phone;?>
-		</div>
-		<hr class="new2">
-		Select Picture:<input type="file" name="file" >
-		<input type="Submit" name="Submit">
-		
+  
+
+  </div>
 </div>				
 </form>
 </body>
 </html>
-<?php
-	if(isset($_POST['Submit']))
-	{
-		$file_name = $_FILES['file']['name'];
-		$file_type = $_FILES['file']['type'];
-		$file_size = $_FILES['file']['size'];
-		$file_tem_loc = $_FILES['file']['tmp_name'];
-		$file_store = "upload/".$file_name;
-	
-		move_uploaded_file($file_tem_loc,$file_store);
-		$con = mysqli_connect("localhost","root","","software_project");
-		$sql="INSERT INTO picture(Id,Name,Source,Type) VALUES('','$file_name','$file_store','$name')";
-		if(mysqli_query($con,$sql))
-		{
-			echo '<script language="javascript">';
-			echo 'alert("Done!!!!"); 
-			location.href="ProfileMentor.php"';
-			echo '</script>';
-		}
-	}
-?>

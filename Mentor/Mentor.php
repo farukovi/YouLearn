@@ -22,13 +22,12 @@ body {
 }
 
 .sidenav {
-  height: 100%;
-  width: 260px;
+  width: 220px;
   position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #111;
+  background-color: #98FB98;
   overflow-x: hidden;
   padding-top: 20px;
   margin-top: 52px;
@@ -59,9 +58,9 @@ body {
 </style>
 </head>
 <body>
-<form style="background-color:#808080">
+<form action="#" method="post" style="background-color: #98FB98">
 <nav class="navbar navbar-inverse">
-  <div class="container-fluid">
+  <div  class="container-fluid" style="background-color:black">
     <div class="navbar-header">
       <a class="navbar-brand" href="#" style="font-size:30px;">YouLearn: Mentor Panel</a>
     </div>
@@ -73,17 +72,33 @@ body {
  <?php
 	$con = mysqli_connect("localhost","root","","software_project");
 	$name = $_SESSION['MentorName'];	
+	$mail = $_SESSION['email'];
 	$sql = "SELECT COUNT(Name) FROM picture WHERE Type='$name'";
+	$sqlno = "SELECT COUNT(Id) FROM mssg WHERE MailFrom = '' and Email='$name'";
 	$res = mysqli_query($con,$sql);
 	if(mysqli_num_rows($res) > 0)
 	{
 		$row = mysqli_fetch_array($res);
 		$num = $row['COUNT(Name)'];
 	}
+	$result = mysqli_query($con,$sqlno);
+	if(mysqli_num_rows($result) > 0)
+	{
+		$row = mysqli_fetch_array($result);
+		$nom = $row['COUNT(Id)'];
+	}
+	$sql="SELECT * FROM picture WHERE Type='$name'";
+	$result=mysqli_query($con,$sql);	
+	if(mysqli_num_rows($result)>0)
+	{
+		$row = mysqli_fetch_array($result);
+		$src = $row['Source'];
+	}
  ?>
 <div class="container">
   <div class="sidenav">
-  <a href="#about">Home</a>
+  <img src=<?php echo $src; ?> class="img-circle" alt="Cinque Terre" width="90%" height="90%" style="margin-left: 15px"> 
+  <a href="Mentor.php"><center>Home</a>
   <?php
 	if($num == 0)
 	{
@@ -95,7 +110,7 @@ body {
 	}
   ?>
   <a href="ViewChildInfo.php">View Child Info</a>
-  <a href="#contact">Contact</a>
+  <a href="UploadContent.php">Upload Section</center></a>
 </div>
 
 <div class="main">
@@ -105,11 +120,11 @@ body {
     <strong>Hello <?php echo $_SESSION['MentorName']; ?></strong> This is your DashBoard.You can check Your child's activity from here. 
   </div>
   <hr class="new2">
-  <button type="button" class="btn btn-default">View Your Weekly Activity</button>
- <button type="button" class="btn btn-default" style="margin-left:50px">Save Child Login</button>
- <button type="button" class="btn btn-default" style="margin-left:50px">Bookmarks</button>
-  <button type="button" class="btn btn-default" style="margin-left:50px">Teacher's Info</button>
- <button type="submit" formaction="Chat.php" class="btn btn-default" style="margin-left:50px">Chat with Admin</button>
+  <button type="submit" formaction="Activity.php" class="btn btn-success">View Your Activity</button>
+ <button type="submit" formaction="Notification.php" class="btn btn-success" style="margin-left:50px">Result<span class="badge"><?php echo $nom; ?></button>
+ <button type="submit" formaction="Bookmarks.php" class="btn btn-success" style="margin-left:50px">Bookmarks</button>
+  <button type="submit" formaction="TeacherInfo.php" class="btn btn-success" style="margin-left:50px">Teacher's Info</button>
+ <button type="submit" formaction="Chat.php" class="btn btn-success" style="margin-left:50px">Chat with Admin</button>
  <hr class="new2">
  <div class="sty" >
  <h3>Purpose: </h3>
@@ -120,18 +135,39 @@ body {
 	</ul>
  </div>
  <hr class="new2">
- <button type="button" class="btn btn-default" style="margin-left:100px;">How to Upload</button>
- <button type="submit" formaction="Child_Approval.php" class="btn btn-default" style="margin-left:50px">Add Child</button>
-  <button type="button" class="btn btn-default" style="margin-left:50px">Request For Online Class</button>
- <button type="submit" formaction="SampleVideo.php" class="btn btn-default" style="margin-left:50px">See Sample Video</button>
+ <button type="submit" formaction="Child_Approval.php" class="btn btn-success" style="margin-left:50px">Add Child</button>
+  <button type="submit" name="req" class="btn btn-success" style="margin-left:50px">Request For Online Class</button>
+  <button type="submit" formaction="HavingTrouble.php" class="btn btn-success" style="margin-left:50px">Having Trouble</button>
+ <button type="submit" formaction="SampleVideo.php" class="btn btn-success" style="margin-left:50px">See Sample Video</button>
 <hr class="new2">
+<?php
 
-<button type="button" class="btn btn-default" style="margin-left:170px">View All Subject</button>
- <button type="button" class="btn btn-default" style="margin-left:50px">View Syllabus</button>
- <button type="button" class="btn btn-default" style="margin-left:50px">Exam Details</button>
- <hr class="new2">
+	$files = scandir("docs");
+	for($i=0;$i < count($files);$i++)
+	{
+		echo '<p style="margin-top:-35px;margin-left:150px;">';
+			echo '<a download='.$files[$i].' href=docs/'.$files[$i].'>'.$files[$i].'</a>';
+		echo '</p>';
+	}
+?>
+ <button type="button" class="btn btn-successs" style="margin-left:520px;margin-top:-100px">Exam Details</button>
+ 
   </div>
 </div>				
 </form>
 </body>
 </html>
+<?php
+	if(isset($_POST['req'])){
+		$con = mysqli_connect("localhost","root","","software_project");
+		$name = $_SESSION['MentorName'];	
+		$query = "INSERT INTO report(Id,Problem,Email) Values('','online','$mail');";
+		if(mysqli_query($con,$query))
+		{
+			echo '<script language="javascript">';
+			echo 'alert("Successfully Registered"); 
+			location.href="Mentor.php"';
+			echo '</script>';
+		}
+	}
+?>

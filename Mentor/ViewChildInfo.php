@@ -21,13 +21,12 @@ body {
 }
 
 .sidenav {
-  height: 100%;
-  width: 260px;
+  width: 220px;
   position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #111;
+  background-color: #98FB98;
   overflow-x: hidden;
   padding-top: 20px;
   margin-top: 52px;
@@ -49,6 +48,7 @@ body {
   margin-left: 160px; /* Same as the width of the sidenav */
   font-size: 28px; /* Increased text to enable scrolling */
   padding: 0px 10px;
+  background-color: #98FB98;
 }
 
 @media screen and (max-height: 450px) {
@@ -57,10 +57,36 @@ body {
 }
 </style>
 </head>
+<?php
+	$con = mysqli_connect("localhost","root","","software_project");
+	$name = $_SESSION['MentorName'];	
+	$mail = $_SESSION['email'];
+	$sql = "SELECT COUNT(Name) FROM picture WHERE Type='$name'";
+	$sqlno = "SELECT COUNT(Id) FROM mssg WHERE MailFrom = ''";
+	$res = mysqli_query($con,$sql);
+	if(mysqli_num_rows($res) > 0)
+	{
+		$row = mysqli_fetch_array($res);
+		$num = $row['COUNT(Name)'];
+	}
+	$result = mysqli_query($con,$sqlno);
+	if(mysqli_num_rows($result) > 0)
+	{
+		$row = mysqli_fetch_array($result);
+		$nom = $row['COUNT(Id)'];
+	}
+	$sql="SELECT * FROM picture WHERE Type='$name'";
+	$result=mysqli_query($con,$sql);	
+	if(mysqli_num_rows($result)>0)
+	{
+		$row = mysqli_fetch_array($result);
+		$src = $row['Source'];
+	}
+ ?>
 <body>
-<form style="background-color:#808080">
+<form style="background-color:#98FB98">
 <nav class="navbar navbar-inverse">
-  <div class="container-fluid">
+  <div class="container-fluid" style="background-color:black">
     <div class="navbar-header">
       <a class="navbar-brand" href="#" style="font-size:30px;">YouLearn: Mentor Panel</a>
     </div>
@@ -72,10 +98,11 @@ body {
   
 <div class="container">
   <div class="sidenav">
-  <a href="#about">Home</a>
+<img src=<?php echo $src; ?> class="img-circle" alt="Cinque Terre" width="90%" height="90%" style="margin-left: 15px">
+  <a href="Mentor.php"><center>Home</a>
   <a href="ProfileMentor.php">Profile</a>
   <a href="ViewChildInfo.php">View Child Info</a>
-  <a href="#contact">Contact</a>
+  <a href="UploadContent.php">Upload Section</center></a>
 </div>
 
 <div class="main">
@@ -85,14 +112,14 @@ body {
 		{
 			echo "Failed to connect to MySQL: " . mysqli_connect_error();
 		}
-		$result = mysqli_query($con,"SELECT * FROM children_account");
+		$name = $_SESSION['MentorName'];
+		$result = mysqli_query($con,"SELECT * FROM children_account where Fathers_Name='$name'");
 		echo "<table border='1'>
 		<tr>
 			<th>Name</th>
 			<th>Birthday</th>
 			<th>BirthId</th>
 			<th>Class</th>
-			<th>Add A picture</th>
 		</tr>";
 		while($row = mysqli_fetch_array($result))
 		{
@@ -101,7 +128,6 @@ body {
 			echo "<td>" . $row['Birthday'] . "</td>"; echo "&nbsp";
 			echo "<td>" . $row['Birth_Id'] . "</td>";
 			echo "<td>" . $row['Class'] . "</td>";
-			echo "<td>" ."<input type='image' src='image/learner.png'". "</td>";
 			echo "</tr>";
 		}
 		echo "</table>";
