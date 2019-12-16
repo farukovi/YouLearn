@@ -13,23 +13,24 @@ if(!isset($_SESSION['name']))
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-  <link href="css/ProMentor.css" rel="stylesheet" type="text/css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <style>
 body {
   font-family: "Lato", sans-serif;
+  position: relative;
 }
-.sidenav{
-  width: 220px;
+
+.sidenav {
+  width: 360px;
   position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
+  background-color: #E6E6FA;
   overflow-x: hidden;
   padding-top: 20px;
   margin-top: 52px;
-  background-color:#E6E6FA;
 }
 
 .sidenav a {
@@ -43,26 +44,25 @@ body {
 .sidenav a:hover {
   color: #f1f1f1;
 }
-
+div.ex1 {
+  width: 450px;
+  height: 430px;
+  overflow: scroll;
+}
 .main {
-  margin-left: 260px; /* Same as the width of the sidenav */
+  margin-left: 320px; /* Same as the width of the sidenav */
   font-size: 28px; /* Increased text to enable scrolling */
   padding: 0px 10px;
+  background-color: #E6E6FA;
 }
 
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
-img {
-  border-radius: 8px;
-}
-.title {
-  color: grey;
-  font-size: 18px;
-}
+.message_box{border: 1px solid black; width:450px; height: 480px; margin-left: 150px;}
+.message_area{width: 100%;  height: 430px;}
 </style>
-</head>
 <?php
 	$con = mysqli_connect("localhost","root","","software_project");
 	$name = $_SESSION['TutorName'];	
@@ -89,75 +89,75 @@ img {
 		$src = $row['Source'];
 	}
  ?>
-<body>
-<form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" enctype="multipart/form-data" style="background-color:#E6E6FA">
+
+</head>
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+<form action="#" method="post" style="background-color:#E6E6FA">
 <nav class="navbar navbar-inverse">
   <div class="container-fluid" style="background-color:black">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#" style="font-size:30px;">YouLearn: Mentor Panel</a>
+      <a class="navbar-brand" href="#" style="font-size:30px;">YouLearn: Tutor Panel</a>
     </div>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="Logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
     </ul>
   </div>
 </nav>
-
 <div class="container">
   <div class="sidenav">
-   <img src=<?php echo $src; ?> class="img-circle" alt="Cinque Terre" style="margin-left:10px" width="200px" height="200px"> 
+   <img src=<?php echo $src; ?> class="img-circle" alt="Cinque Terre" style="margin-left:90px" width="200px" height="200px"> 
   <a href="Tutor.php"><center>Home</a>
 	<a href="ProfileTutor.php">Profile</a>
   <a href="ViewChildInfo.php">View Child Info</a>
 </div>
-</div>
-<?php
-	$name = $_SESSION['TutorName'];
-	$con=mysqli_connect("localhost","root","","software_project");
-	$sql="SELECT * FROM picture WHERE Type='$name'";
-	$result=mysqli_query($con,$sql);	
-	if(mysqli_num_rows($result)>0)
-	{
-		$row = mysqli_fetch_array($result);
-		$src = $row['Source'];
-	}
-	$id = $_SESSION['TutorId'];
-	$query="SELECT * FROM tutor_info WHERE Id='$id'";
-	$res = mysqli_query($con,$query);
-	if(mysqli_num_rows($res)>0)
-	{
-		$row = mysqli_fetch_array($res);
-		$naam  = $row['Name'];
-		$mail = $row['Email'];
-		$add = $row['Address'];
-		$phone = $row['phone'];
-	}
-	$command = "SELECT * FROM tutor WHERE Email='$mail'";
-	$ans = mysqli_query($con,$command);
-	if(mysqli_num_rows($ans)>0)
-	{
-		$row = mysqli_fetch_array($ans);
-		$class_no1 = $row['Class_num_1'];
-		
-	}
-?>
+
 <div class="main">
-	<center>Welcome to Mentor Home page</center>
-	<div class="left">
-	
-		<img src=<?php echo $src; ?>  width="400" height="500">
-	</div>
-	<div class="right">
-		<h1><?php echo $naam; ?></h1>
-		<hr>
-		<h3><?php echo $mail; ?></h3>
-		<h4><?php echo $add; ?></h4>
-		<h4><?php echo "0".$phone; ?></h4>
-		<hr>
-		<h3>Class: <?php echo $class_no1; ?></h3>
-		<br>
-	</div>
-</div>			
-<hr>
-</form>
+	<center>Group chat</center>
+		<hr class="new2">
+		
+		<div class="message_box">
+			<div class="ex1">
+			<div class="message_area">
+			<?php
+				$con=mysqli_connect("localhost","root","","software_project");
+				$sql = "SELECT * FROM tutor_chat";
+				$res = mysqli_query($con,$sql);
+				while($row=mysqli_fetch_assoc($res))
+				{
+					$naam = $row['Mail'];
+					$text = $row['Message'];
+					$when = $row['DateTime'];
+					echo '<h6 style="color:blue">'.$naam ." ". $when .'</h6>';
+					echo '<p>'.$text.'</p>';
+					echo '<hr>';
+				}
+			?>
+			<?php
+				if(isset($_POST['sbmt']))
+				{
+					$name = $_SESSION['TutorName'];
+					$mssg = $_POST['mssg'];
+					date_default_timezone_set("Asia/Dhaka");
+					$timer = date("h:i:sa");
+					$con=mysqli_connect("localhost","root","","software_project");
+					$query = "INSERT INTO tutor_chat(Id,Mail,Message,DateTime) VALUES('','$name','$mssg','$timer')";
+						//echo $query;
+					if(mysqli_query($con,$query))
+					{
+						header("Location: Chat.php");
+					}
+				}
+			?>
+			</div>
+			</div>
+			<form method="post">
+				<input type="text" name="mssg"  placeholder="Type Your Text Here!">
+				<input type="submit" name="sbmt" value="Sent">
+			</form>
+		
+		</div>
+  </div>
+  <br>
+</div>				
 </body>
 </html>

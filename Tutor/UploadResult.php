@@ -4,6 +4,8 @@ if(!isset($_SESSION['name']))
 {
 	header("Location:YouLearn.html");
 }
+	$con = mysqli_connect("localhost","root","","software_project");
+	
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,11 +28,12 @@ body {
   z-index: 1;
   top: 0;
   left: 0;
+  background-color: #E6E6FA;
   overflow-x: hidden;
   padding-top: 20px;
   margin-top: 52px;
-  background-color: #E6E6FA;
 }
+
 .sidenav a {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
@@ -47,7 +50,6 @@ body {
   margin-left: 160px; /* Same as the width of the sidenav */
   font-size: 28px; /* Increased text to enable scrolling */
   padding: 0px 10px;
- 
 }
 
 @media screen and (max-height: 450px) {
@@ -74,21 +76,46 @@ body {
 		$row = mysqli_fetch_array($result);
 		$nom = $row['COUNT(Id)'];
 	}
-	$sql="SELECT * FROM picture WHERE Type='$name'";
-	$result=mysqli_query($con,$sql);	
+	$sql1="SELECT * FROM picture WHERE Type='$name'";
+	$result=mysqli_query($con,$sql1);	
 	if(mysqli_num_rows($result)>0)
 	{
 		$row = mysqli_fetch_array($result);
 		$src = $row['Source'];
 	}
+	$query = "SELECT * FROM tutor WHERE Email = '$mail'";
+	$com = mysqli_query($con,$query);
+	if(mysqli_num_rows($com)>0){
+		$row = mysqli_fetch_array($com);
+		$class = $row['Class_num_1'];
+	}
+	if($class == "Play"){
+		$command = "SELECT * FROM play ORDER BY Id ASC";
+		$oracle = mysqli_query($con,$command);
+	}
+	else if($class == "nursery-1"){
+		$command = "SELECT * FROM nursery-1 ORDER BY Id ASC";
+		$oracle = mysqli_query($con,$command);
+	}
+	else if($class == "nursery-2"){
+		$command = "SELECT * FROM nursery-2 ORDER BY Id ASC";
+		$oracle = mysqli_query($con,$command);
+	}
+	else if($class == ""){
+		$command = "SELECT * FROM Class-1 ORDER BY Id ASC";
+		$oracle = mysqli_query($con,$command);
+	}
+	else if($class == ""){
+		$command = "SELECT * FROM Class-2 ORDER BY Id ASC";
+		$oracle = mysqli_query($con,$command);
+	}
  ?>
-
 <body>
-<form style="background-color:#E6E6FA">
+<form action="insert.php" method="post" style="background-color:#E6E6FA">
 <nav class="navbar navbar-inverse">
   <div class="container-fluid" style="background-color:black">
     <div class="navbar-header">
-      <a class="navbar-brand"  style="font-size:30px;">YouLearn: Tutor Panel</a>
+      <a class="navbar-brand" href="#" style="font-size:30px;">YouLearn: Tutor Panel</a>
     </div>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="Logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
@@ -98,19 +125,10 @@ body {
   
 <div class="container">
   <div class="sidenav">
-  <img src=<?php echo $src; ?> class="img-circle" alt="Cinque Terre" style="margin-left: 10px" width="200px" height="200px"> 
+      <img src=<?php echo $src; ?> class="img-circle" alt="Cinque Terre" style="margin-left:10px" width="200px" height="200px"> 
   <a href="Tutor.php"><center>Home</a>
-	<?php
-		if($num==0)
-		{
-			echo '<a href="PicTutor.php">Profile<span class="badge">1</span></a>';
-		}
-		else
-		{
-			echo '<a href="ProfileTutor.php">Profile</a>';
-		}
-	?>
-  <a href="UploadContent.php">Upload Section</center></a>
+	<a href="ProfileTutor.php">Profile</a>
+  <a href="ViewChildInfo.php">View Child Info</a>
 </div>
 
 <div class="main">
@@ -118,33 +136,44 @@ body {
 <div class="alert alert-info">
     <strong>Hello <?php echo $_SESSION['TutorName']; ?></strong> You're assigned to Play Group.You have to cover the syllabus with your video content.
   </div>
-  <hr class="new2">
- <button type="submit" formaction="ViewStudent.php" class="btn btn-info" >View all the student</button>
-  <button type="submit" formaction="TextToMentor.php" class="btn btn-info" style="margin-left:50px">Upload List</button>
-  <button type="submit" formaction="Notification.php" class="btn btn-info" style="margin-left:50px">Question<span class="badge"><?php echo $nom; ?></button>
- <button type="submit" formaction="Chat.php" class="btn btn-info" style="margin-left:50px">Chat</button>
- <button type="submit" formaction="SetTime.php" class="btn btn-info" style="margin-left:50px">Set your time</button>
+ <hr class="new2">
+ Bangla<input type="number" name="bangla"><br>
+English<input type="number" name="english"><br>
+Math<input type="number" name="math"><br>
+Digit<input type="number" name="digit"><br>
+Poem<input type="number" name="poem"><br>
+<select name="customers" onchange="showCustomer(this.value)">
+<option value="">Message:</option>
+<?php
+	while($row = mysqli_fetch_array($oracle))
+	{
+		echo '<option value="'.$row['Id'].'">'.$row["Id"].'</option>';
+	}
+?>
+</select>
 
- <hr class="new2">
- <div class="sty" >
- <h3>For uploading a video you just keep in mind: </h3>
-	<ul>
-	 <h5> <li>Video must be in mp4 format</li>
-	  <li>Clear sound and voice</li>
-	  <li>Many more</li>
-	</ul>
- </div>
- <hr class="new2">
- <button type="submit" formaction="HowToUpload.php" class="btn btn-info" >How to Upload</button>
- <button type="submit" formaction="HavingTrouble.php" class="btn btn-info" style="margin-left:50px">Having trouble?</button>
- <button type="submit" formaction="UploadResult.php" class="btn btn-info" style="margin-left:50px">Upload Result</button>
-  <button type="submit" formaction="Question.php" class="btn btn-info" style="margin-left:50px">Question Set</button>
- <button type="submit" formaction="SampleVideo.php" class="btn btn-info" style="margin-left:50px">See Sample Video</button>
-<hr class="new2">
- <button type="submit" formaction="Syllabus.php" class="btn btn-info" style="margin-left:50px">View Syllabus</button>
- <button type="button"  class="btn btn-info" style="margin-left:50px">Exam Details</button>
- <hr class="new2">
+</form>
+		<div id="txtHint">Teachers info will be listed here...</div>
+		</div>
+		<script>
 
+function showCustomer(str) {
+  var xhttp;   
+'alert(str);  '
+  if (str == "") {
+    document.getElementById("txtHint").innerHTML = "";
+    return;
+  }
+  xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("txtHint").innerHTML = this.responseText;
+    }
+  };
+  xhttp.open("GET", "uploadxm.php?q="+str, true);
+  xhttp.send();
+}
+</script>
 </div>
 </div>
 </form>

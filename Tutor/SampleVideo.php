@@ -22,13 +22,12 @@ body {
 }
 
 .sidenav {
-  height: 100%;
-  width: 260px;
+  width: 220px;
   position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #111;
+  background-color: #E6E6FA;
   overflow-x: hidden;
   padding-top: 20px;
   margin-top: 52px;
@@ -38,7 +37,7 @@ body {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
   font-size: 25px;
-  color: #818181;
+  color: black;
   display: block;
 }
 
@@ -58,10 +57,36 @@ body {
 }
 </style>
 </head>
+<?php
+	$con = mysqli_connect("localhost","root","","software_project");
+	$name = $_SESSION['TutorName'];	
+	$mail = $_SESSION['TutorMail'];
+	$sql = "SELECT COUNT(Name) FROM picture WHERE Type='$name'";
+	$sqlno = "SELECT COUNT(Id) FROM mssg WHERE MailFrom = ''";
+	$res = mysqli_query($con,$sql);
+	if(mysqli_num_rows($res) > 0)
+	{
+		$row = mysqli_fetch_array($res);
+		$num = $row['COUNT(Name)'];
+	}
+	$result = mysqli_query($con,$sqlno);
+	if(mysqli_num_rows($result) > 0)
+	{
+		$row = mysqli_fetch_array($result);
+		$nom = $row['COUNT(Id)'];
+	}
+	$sql="SELECT * FROM picture WHERE Type='$name'";
+	$result=mysqli_query($con,$sql);	
+	if(mysqli_num_rows($result)>0)
+	{
+		$row = mysqli_fetch_array($result);
+		$src = $row['Source'];
+	}
+ ?>
 <body>
-<form style="background-color:#808080">
+<form style="background-color:#E6E6FA">
 <nav class="navbar navbar-inverse">
-  <div class="container-fluid">
+  <div class="container-fluid" style="background-color:black">
     <div class="navbar-header">
       <a class="navbar-brand" href="#" style="font-size:30px;">YouLearn: Mentor Panel</a>
     </div>
@@ -73,15 +98,15 @@ body {
   
 <div class="container">
   <div class="sidenav">
-  <a href="#about">Home</a>
-  <a href="ProfileMentor.php">Profile</a>
+      <img src=<?php echo $src; ?> class="img-circle" alt="Cinque Terre" style="margin-left:10px" width="200px" height="200px"> 
+  <a href="Tutor.php"><center>Home</a>
+	<a href="ProfileTutor.php">Profile</a>
   <a href="ViewChildInfo.php">View Child Info</a>
-  <a href="#contact">Contact</a>
 </div>
 
 <div class="main">
 	<video width="1070" height="570" controls>
-  <source src="justin.mp4" type="video/mp4">
+  <source src="upload/justin.mp4" type="video/mp4">
   
   
 </video>

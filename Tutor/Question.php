@@ -46,7 +46,7 @@ body {
 
 .main {
   margin-left: 160px; /* Same as the width of the sidenav */
-  font-size: 15px; /* Increased text to enable scrolling */
+  font-size: 25px; /* Increased text to enable scrolling */
   padding: 0px 10px;
 }
 
@@ -57,7 +57,7 @@ body {
 
 
 </style>
-</head>
+</head
 <?php
 	$con = mysqli_connect("localhost","root","","software_project");
 	$name = $_SESSION['TutorName'];	
@@ -99,16 +99,16 @@ body {
   
 <div class="container">
   <div class="sidenav">
-     <img src=<?php echo $src; ?> class="img-circle" alt="Cinque Terre" style="margin-left:10px" width="200px" height="200px"> 
+      <img src=<?php echo $src; ?> class="img-circle" alt="Cinque Terre" style="margin-left:10px" width="200px" height="200px"> 
   <a href="Tutor.php"><center>Home</a>
 	<a href="ProfileTutor.php">Profile</a>
   <a href="ViewChildInfo.php">View Child Info</a>
 </div>
 
 <div class="main">
-<h2><center>Welcome to Tutor Home page</center></h2>
+<h2><center>Upload Question</center></h2>
 <div class="alert alert-info">
-    <strong>Hello <?php echo $_SESSION['TutorName']; ?></strong> Select Class and Subject first.Then choose at least two files for each lesson.
+    <strong>Hello <?php echo $_SESSION['TutorName']; ?></strong> Select Class and Subject first.Then choose at least two Question set for each exam.
   </div>
   <hr class="new2">
   <label for="pwd">Class:</label>
@@ -140,16 +140,7 @@ body {
 	<label class="checkbox-inline">
 		<input type="radio" value="Math" name="sub">Math
 	</label>
-	<label class="checkbox-inline">
-		<input type="radio" value="Poem" name="sub">Poem
-	</label>
-	<label class="checkbox-inline">
-		<input type="radio" value="Story" name="sub">Story
-	</label>
-	<label class="checkbox-inline">
-		<input type="radio" value="Question" name="sub">Question
-		
-	</label><<br><hr>
+	<br><hr>
 	<label for="usr">Select file no 1:</label>
 	<input type="file" name="file">
 	<hr class="new2">
@@ -178,8 +169,8 @@ body {
 			$fileno1_size = $_FILES['file']['size'];
 			$fileno1_tem_loc = $_FILES['file']['tmp_name'];
 			$path = $_SERVER["DOCUMENT_ROOT"];
-			$fileno1_store = $path."/Project/Child/video/".$class."/".$subject."/".$fileno1_name;
-			$src = "video/".$class."/".$subject."/".$fileno1_name;
+			$fileno1_store = $path."/Project/Admin/Question/".$class."/".$subject."/".$fileno1_name;
+			$src = "Question/".$class."/".$subject."/".$fileno1_name;
 		
 			move_uploaded_file($fileno1_tem_loc,$fileno1_store);
 			
@@ -193,9 +184,9 @@ body {
 			 $fileno2_size = $_FILES['fileTo']['size'];
 			 $fileno2_tem_loc = $_FILES['fileTo']['tmp_name'];
 			 $path = $_SERVER["DOCUMENT_ROOT"];
-			 $fileno2_store = $path."/Project/Child/video/".$class."/".$subject."/".$fileno2_name;
+			 $fileno2_store = $path."/Project/Admin/Question/".$class."/".$subject."/".$fileno2_name;
 			
-			$src1 = "video/".$class."/".$subject."/".$fileno1_name;
+			$src1 = "Question/".$class."/".$subject."/".$fileno1_name;
 			
 			 move_uploaded_file($fileno2_tem_loc,$fileno2_store);
 			
@@ -209,9 +200,9 @@ body {
 				 $fileno3_size = $_FILES['fileToUpload']['size'];
 				 $fileno3_tem_loc = $_FILES['fileToUpload']['tmp_name'];
 				 $path = $_SERVER["DOCUMENT_ROOT"];
-				 $fileno3_store = $path."/Project/Child/video/".$class."/".$subject."/".$fileno3_name;
+				 $fileno3_store = $path."/Project/Admin/Question/".$class."/".$subject."/".$fileno3_name;
 				
-				 $src2 = "video/".$class."/".$subject."/".$fileno1_name;
+				 $src2 = "Question/".$class."/".$subject."/".$fileno1_name;
 				
 				 move_uploaded_file($fileno3_tem_loc,$fileno3_store);
 			}
@@ -223,10 +214,8 @@ body {
 				echo '</script>';
 			}
 			else{
-				date_default_timezone_set("Asia/Dhaka");
-				$timer = date("Y/m/d")."  ".date("h:i:sa");
-				$sql="INSERT INTO docofplay(Id,Source,Source_1,Source_2,DateTime,Subject) VALUES('','$src','$src1','$src2','$timer','$subject')";
-				if(mysqli_query($con,$sql))
+				$sql1="INSERT INTO setquestion(Id,Name,Name1,Name2,Subject,Class) VALUES('','$src','$src1','$src2','$subject','$class')";
+				if(mysqli_query($con,$sql1))
 				{
 					echo '<script language="javascript">';
 					echo 'alert("Done!!!!"); 
